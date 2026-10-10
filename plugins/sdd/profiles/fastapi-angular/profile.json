@@ -1,0 +1,47 @@
+{
+  "description": "FastAPI (Python) backend + Angular SPA frontend, two independently run areas talking over an HTTP API.",
+  "config": {
+    "profile": "fastapi-angular",
+    "requireContracts": true,
+    "commitTags": ["ADD", "IMP", "DOCS"],
+    "protected": [],
+    "areas": [
+      {
+        "id": "backend",
+        "root": "backend/",
+        "role": "backend",
+        "tag": "BE",
+        "protected": [],
+        "gates": ["pytest"]
+      },
+      {
+        "id": "frontend",
+        "root": "frontend/",
+        "role": "frontend",
+        "tag": "FE",
+        "verify": "browser walkthrough",
+        "gates": ["npm run lint", "npm run build", "npm test -- --watch=false"],
+        "lint": {
+          "match": "src/**/*.{ts,html}",
+          "cwd": ".",
+          "requires": "node_modules/eslint/bin/eslint.js",
+          "command": ["node", "node_modules/eslint/bin/eslint.js", "--fix", "--cache", "--cache-location", "node_modules/.cache/eslint/", "{file}"]
+        }
+      }
+    ]
+  },
+  "permissions": {
+    "allow": [
+      "Bash(npm run lint:*)",
+      "Bash(npm run build:*)",
+      "Bash(npm test:*)",
+      "Bash(npx ng lint:*)",
+      "Bash(npx ng build:*)",
+      "Bash(npx ng test:*)",
+      "Bash(pytest:*)",
+      "Bash(python -m pytest:*)"
+    ]
+  },
+  "templates": ["templates/design-template.md", "templates/contracts-template.md"],
+  "constitutionNotes": "Technology Standards need a subsection per area id (backend, frontend): path, stack, hard constraints, reference code, quality gates, verification method."
+}

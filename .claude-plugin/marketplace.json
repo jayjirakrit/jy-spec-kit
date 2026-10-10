@@ -1,0 +1,12 @@
+{
+  "name": "jy-spec-kit",
+  "owner": { "name": "Jirakrit" },
+  "description": "Team spec-driven development workflow layered on GitHub Spec-Kit.",
+  "plugins": [
+    {
+      "name": "sdd",
+      "source": "./plugins/sdd",
+      "description": "Spec-driven development layer on top of GitHub Spec-Kit: orchestrators, agents, hooks, stack profiles."
+    }
+  ]
+}

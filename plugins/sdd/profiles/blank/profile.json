@@ -1,0 +1,13 @@
+{
+  "description": "Stack-neutral starting point. /sdd:init asks which areas the repo has and fills in roots, roles and gates.",
+  "config": {
+    "profile": "blank",
+    "requireContracts": false,
+    "commitTags": ["ADD", "IMP", "DOCS"],
+    "protected": [],
+    "areas": []
+  },
+  "permissions": { "allow": [] },
+  "templates": [],
+  "constitutionNotes": "Technology Standards need a subsection per area id: path, stack, hard constraints, reference code, quality gates, verification method."
+}
