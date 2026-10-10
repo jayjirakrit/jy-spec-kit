@@ -24,5 +24,5 @@ Run these checks and print a table `check → PASS / WARN / FAIL → fix`. Chang
    macOS/Linux (ask), or if any registry `source` in `.specify/workflows/workflow-registry.json`
    is an absolute machine path.
 8. **Stack words in core** (only when run inside the plugin repo itself): grep
-   `plugins/sdd/{agents,skills,hooks}` for `fastapi|angular|react|django|backend/|frontend/|\.venv`
+   `plugins/jy-sdd/{agents,skills,hooks}` for `fastapi|angular|react|django|backend/|frontend/|\.venv`
    and FAIL on any hit.

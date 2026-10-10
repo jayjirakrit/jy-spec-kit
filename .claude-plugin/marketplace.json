@@ -4,8 +4,8 @@
   "description": "Team spec-driven development workflow layered on GitHub Spec-Kit.",
   "plugins": [
     {
-      "name": "sdd",
-      "source": "./plugins/sdd",
+      "name": "jy-sdd",
+      "source": "./plugins/jy-sdd",
       "description": "Spec-driven development layer on top of GitHub Spec-Kit: orchestrators, agents, hooks, stack profiles."
     }
   ]

@@ -7,7 +7,7 @@ export function loadConfig(root) {
     const cfg = JSON.parse(fs.readFileSync(path.join(root, '.sdd.config.json'), 'utf8'));
     return { areas: [], protected: [], ...cfg };
   } catch {
-    return null; // repo not initialised with /sdd:init: hooks stay silent
+    return null; // repo not initialised with /jy-sdd:init: hooks stay silent
   }
 }
 

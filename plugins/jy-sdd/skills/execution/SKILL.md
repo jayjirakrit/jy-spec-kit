@@ -1,6 +1,6 @@
 ---
 name: execution
-description: Orchestrate the code half of the Spec-Kit cycle: implement and converge loop with per-area area-engineer dispatch, quality-engineer verification, a /code-review pass, a human review gate, then an optional convention-following commit. Requires tasks.md from /sdd:elaboration.
+description: Orchestrate the code half of the Spec-Kit cycle: implement and converge loop with per-area area-engineer dispatch, quality-engineer verification, a /code-review pass, a human review gate, then an optional convention-following commit. Requires tasks.md from /jy-sdd:elaboration.
 argument-hint: "Optional implementation guidance or task filter"
 user-invocable: true
 ---
@@ -17,17 +17,17 @@ Consider the user input before proceeding (if not empty).
 
 Turn an approved `tasks.md` into working, verified, reviewed code by running the **stock**
 Spec-Kit skills with the delegation rules below. This skill sequences, dispatches, loops, gates
-and reports. The documentation half is `/sdd:elaboration`.
+and reports. The documentation half is `/jy-sdd:elaboration`.
 
 ## Step 1 — Preconditions
 
-1. `.specify/` and `.sdd.config.json` must exist (else: run `/sdd:init`). Read `areas`,
+1. `.specify/` and `.sdd.config.json` must exist (else: run `/jy-sdd:init`). Read `areas`,
    `commitTags`.
 2. Run the Spec-Kit prerequisites script that matches `.specify/init-options.json` `script`
    (`ps` → `.specify/scripts/powershell/check-prerequisites.ps1 -Json -RequireTasks -IncludeTasks`;
    `sh` → `.specify/scripts/bash/check-prerequisites.sh --json --require-tasks --include-tasks`)
    from the repo root and parse `FEATURE_DIR`.
-3. Missing `tasks.md`/`plan.md` → stop; tell the user to run `/sdd:elaboration`.
+3. Missing `tasks.md`/`plan.md` → stop; tell the user to run `/jy-sdd:elaboration`.
 4. Record the starting point: `git status --short` and `git rev-parse HEAD`.
 
 ## Delegation rules (apply to every `speckit-implement` run)

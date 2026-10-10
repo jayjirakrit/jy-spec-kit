@@ -16,7 +16,7 @@ $ARGUMENTS
 Wires one repo to this plugin. Ownership rules:
 - **Plugin-owned** (never copied): agents, orchestrators, hooks. They load from the plugin.
 - **Repo-owned** (never overwritten without asking): `.sdd.config.json`, `.specify/memory/constitution.md`, `CLAUDE.md`, `specs/`.
-- **Scaffold** (copied once; `/sdd:doctor` reports drift): profile templates, permission baseline.
+- **Scaffold** (copied once; `/jy-sdd:doctor` reports drift): profile templates, permission baseline.
 
 ## Steps
 
@@ -49,6 +49,6 @@ Wires one repo to this plugin. Ownership rules:
    `.claude/settings.local.json`, `.specify/feature.json`, `.specify/.workflow-install.lock`.
    Remove any blanket `.claude` / `.specify` ignore (ask first).
 8. **Report** what was written, what was skipped, and next steps: commit the setup
-   (`[IMP][DOC]`-style per the repo's conventions), run `/sdd:doctor`, then `/sdd:elaboration`.
+   (`[IMP][DOC]`-style per the repo's conventions), run `/jy-sdd:doctor`, then `/jy-sdd:elaboration`.
 
 Never commit or push on the user's behalf.

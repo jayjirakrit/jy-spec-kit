@@ -18,12 +18,12 @@ Consider the user input before proceeding (if not empty).
 Take a feature from a natural-language description to a reviewed, analyzed `tasks.md` by running
 the **stock** Spec-Kit skills (`speckit-*`, installed by `specify init`) in order, with the
 delegation rules below. Each step is the named skill, invoked with the `Skill` tool, and its
-instructions are followed in full. The code half of the cycle is `/sdd:execution`.
+instructions are followed in full. The code half of the cycle is `/jy-sdd:execution`.
 
 ## Preconditions
 
 - `.specify/` exists (Spec-Kit installed) and `.sdd.config.json` exists. If either is missing,
-  stop and tell the user to run `/sdd:init`.
+  stop and tell the user to run `/jy-sdd:init`.
 - Read `.sdd.config.json`: `areas`, `requireContracts`, `commitTags`.
 
 ## Scope Rule (non-negotiable)
@@ -94,14 +94,14 @@ Every task names the file path(s) it touches so they can be routed to an area."*
 
 ### F. Analyze
 Invoke `Skill speckit-analyze`, skipping its step 8 (offer remediation). CRITICAL findings → list
-them, recommend the concrete fix, and state that `/sdd:execution` should not start until resolved.
+them, recommend the concrete fix, and state that `/jy-sdd:execution` should not start until resolved.
 Otherwise summarize HIGH/MEDIUM counts in one line. Edit nothing automatically.
 
 ## Completion Report
 
 - Feature directory and artifacts written; gate outcomes; analyze metrics
 - Next: optionally commit the spec alone (`[DOCS] add <feature-name> feature spec`, only
-  `specs/<NNN-feature>/`), `/compact keep feature <NNN> dir, analyze findings`, then `/sdd:execution`
+  `specs/<NNN-feature>/`), `/compact keep feature <NNN> dir, analyze findings`, then `/jy-sdd:execution`
 
 ## Excluded on purpose
 

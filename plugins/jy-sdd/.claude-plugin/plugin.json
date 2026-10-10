@@ -1,5 +1,5 @@
 {
-  "name": "sdd",
+  "name": "jy-sdd",
   "version": "0.1.0",
   "description": "Spec-driven development layer on top of GitHub Spec-Kit: orchestrated elaboration/execution, specialist agents, config-driven hooks and per-stack profiles.",
   "author": { "name": "Jirakrit" },
