@@ -30,7 +30,7 @@ Wires one repo to this plugin. Ownership rules:
    before changing anything. Otherwise write it from the profile's `config`, adding
    `"frameworkVersion"` = the plugin version from `${CLAUDE_PLUGIN_ROOT}/.claude-plugin/plugin.json`.
    - `blank` profile (or any profile with empty `areas`): ask the user for each area's `id`, `root`,
-     `role` (free text), `tag` and gate commands; optionally a `lint` entry (see
+     `role` (`backend` or `frontend`; it selects the engineer agent, anything else falls back to `team-lead`), `tag` and gate commands; optionally a `lint` entry (see
      `hooks/lint-area.mjs` header) and `protected` globs.
    - Verify every area `root` exists on disk; warn if not.
 4. **Templates.** For each path in the profile's `templates`, copy it from the profile folder into

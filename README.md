@@ -12,7 +12,7 @@ pinned, this plugin adds the orchestration, agents, hooks and per-stack profiles
 | `/jy-sdd:elaboration` | `skills/elaboration` | specify → clarify → **gate** → plan (+`design.md`) → **gate** → tasks → analyze |
 | `/jy-sdd:execution` | `skills/execution` | implement ⇄ converge → quality review ∥ `/code-review` → **gate** → optional commit |
 | `/jy-sdd:doctor` | `skills/doctor` | Read-only setup health check |
-| Agents | `agents/` | `business-analyst`, `solution-architect`, `area-engineer`, `quality-engineer` |
+| Agents | `agents/` | `business-analyst`, `solution-architect`, `team-lead`, `backend-engineer`, `frontend-engineer`, `quality-engineer` |
 | Hooks | `hooks/` | config-driven path guard, per-area lint-on-edit, post-compact context restore |
 | Profiles | `profiles/` | `fastapi-angular`, `blank` (stack facts + templates + permission baseline) |
 

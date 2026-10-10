@@ -1,6 +1,6 @@
 ---
 name: execution
-description: Orchestrate the code half of the Spec-Kit cycle: implement and converge loop with per-area area-engineer dispatch, quality-engineer verification, a /code-review pass, a human review gate, then an optional convention-following commit. Requires tasks.md from /jy-sdd:elaboration.
+description: Orchestrate the code half of the Spec-Kit cycle: implement and converge loop with role-based dispatch (backend-engineer, frontend-engineer, team-lead), quality-engineer verification, a /code-review pass, a human review gate, then an optional convention-following commit. Requires tasks.md from /jy-sdd:elaboration.
 argument-hint: "Optional implementation guidance or task filter"
 user-invocable: true
 ---
@@ -37,10 +37,13 @@ When invoking `Skill speckit-implement`, add these instructions:
 - **Read `design.md`** (if present) with the other design docs: it is the intended direction;
   deviations must be called out in the completion report.
 - **Route each task by file path** using `.sdd.config.json` `areas[].root`:
-  - All target files under one area's `root` → dispatch the `area-engineer` agent
-    (`Agent`, `subagent_type: area-engineer`) with `AREA_ID: <id>`, FEATURE_DIR and the task(s).
+  - All target files under one area's `root` → dispatch the engineer matching that area's `role`
+    (`Agent`, `subagent_type: backend-engineer` for `role: backend`, `frontend-engineer` for
+    `role: frontend`) with `AREA_ID: <id>`, FEATURE_DIR and the task(s). A `role` that is neither →
+    dispatch `team-lead` instead.
   - Files spanning areas, or outside every area (`specs/`, root config, cross-cutting docs) →
-    execute directly in this thread.
+    dispatch `team-lead` (`subagent_type: team-lead`) with FEATURE_DIR and the task(s). Pass
+    engineers' `OPEN QUESTIONS` to `team-lead` when they need a cross-area decision.
 - Preserve dependency and `[P]` rules: wait for a dispatched task before starting anything that
   depends on it; independent `[P]` tasks may be dispatched concurrently, even across areas.
 - Each subagent ends with the fixed report block (`STATUS`, `COMPLETED`, `FAILED`, `FILES
@@ -75,7 +78,7 @@ Pipelined per area so one area's review overlaps the other's work:
    `STATUS: done`, dispatch `quality-engineer` (`run_in_background: true`) with FEATURE_DIR,
    `SCOPE: <areaId>`, `MODE: fresh` and that area's engineer `VERIFICATION` lines.
 2. **Per-lane fix pass**: on a FAIL verdict, route each production-code finding once to that area's
-   `area-engineer`, then re-dispatch that lane once with `MODE: delta`, the changed files and the
+   engineer for that area's `role`, then re-dispatch that lane once with `MODE: delta`, the changed files and the
    findings addressed. Still failing → keep findings for the report; no more loops.
 3. **Integration**: after all tasks and lanes finish, dispatch `quality-engineer` once with
    `SCOPE: integration` (foreground, unless Step 3 runs `/code-review` alongside). It checks
