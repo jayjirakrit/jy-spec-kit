@@ -40,7 +40,7 @@ Three layers, strictly separated:
 ```jsonc
 {
   "profile": "fastapi-angular",
-  "frameworkVersion": "0.1.0",
+  "frameworkVersion": "0.2.0",
   "requireContracts": true,
   "commitTags": ["ADD", "IMP", "DOCS"],
   "protected": [{ "glob": "backend/data/*.xlsx", "reason": "Deployed template, edit by hand." }],
@@ -60,7 +60,7 @@ Domain rules (calendars, currencies, language) belong in the repo's constitution
 Create `plugins/jy-sdd/profiles/<name>/profile.json` with `config` (areas, gates, lint), `permissions.allow`,
 `templates` (files under `profiles/<name>/templates/`) and `constitutionNotes`. Nothing else changes.
 
-## Status: v0.1.0 (untested skeleton)
+## Status: v0.2.0 (untested skeleton)
 
 Extracted from the Serichai web portal's local setup. **Not yet run end to end.** Known gaps:
 
