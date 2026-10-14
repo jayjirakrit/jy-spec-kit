@@ -71,10 +71,23 @@ priorities, FR and SC counts, assumptions). `AskUserQuestion`: **Approve**, **Re
 Invoke `Skill speckit-plan`, adding this instruction: *"Execute Phases 0 and 1 by dispatching one
 `Agent` call with `subagent_type: solution-architect`, giving it FEATURE_SPEC, IMPL_PLAN,
 SPECS_DIR, BRANCH and any guidance. It writes `plan.md`, `research.md`, `data-model.md`,
-`contracts/*.md`, `quickstart.md` and `design.md` directly. Wait for it to finish both phases."*
+`contracts/*.md`, `quickstart.md`, `design.md` and `test-design.md` directly. Wait for it to
+finish both phases."*
 The dispatch message must also say:
 - `design.md` is built from `.specify/templates/design-template.md`, 250-400 lines, one 10-40 line
-  snippet per key file, the only artifact allowed to hold implementation code.
+  snippet per key file, the only artifact allowed to hold implementation code. Each key file gets
+  a "Tests" line of TC-IDs instead of test tables.
+- `test-design.md` is built from `.specify/templates/test-design-template.md`: test strategy,
+  coverage target and layers per area (level, what each fakes, existing test to follow), a
+  coverage matrix from spec items to TC-IDs, test cases as Given/When/Then rows grouped by area →
+  layer → test file, one 10-30 line reference unit test per layer implementing a real TC, and the
+  test data and mocking strategy.
+  - Every P1 acceptance scenario, behavioural FR and contract error case gets a TC; untested edge
+    cases are listed with a reason.
+  - Each test-file block becomes one test task, so test file paths are real paths in the area's
+    layout.
+  - Only the reference test per layer is code; never full test suites.
+  - List `test-design.md` in the report's COMPLETED field.
 - If `requireContracts` is true: `contracts/` is **mandatory**: one `contracts/<resource>-api.md`
   per interface the feature adds or changes between areas, built from
   `.specify/templates/contracts-template.md` (delta contract if extending an existing one), and
@@ -83,17 +96,25 @@ The dispatch message must also say:
 - Areas are the ids in `.sdd.config.json`; design and contracts must respect each area's
   Technology Standards subsection in the constitution.
 
-### GATE 2 — Review plan + design.md (human)
-Present paths to `plan.md`, `design.md`, `contracts/`, plus approach, key decisions, risks,
-open questions and constitution-check notes. `AskUserQuestion`: **Approve**, **Revise**, **Abort**.
+### GATE 2 — Review plan + design.md + test-design.md (human)
+Present paths to `plan.md`, `design.md`, `test-design.md`, `contracts/`, plus approach, key
+decisions, risks, open questions, constitution-check notes, and test coverage in one line (TC
+count per area and layer, coverage target, P1 scenarios without a TC, items listed under "Not
+tested in code"). `AskUserQuestion`: **Approve**, **Revise**, **Abort**.
 - Approve → E. Revise → re-run `speckit-plan` with feedback, then GATE 2 again. Abort → stop.
 
 ### E. Tasks
 Invoke `Skill speckit-tasks`, adding: *"Also read `design.md` and align task file paths with it.
-Every task names the file path(s) it touches so they can be routed to an area."*
+Every task names the file path(s) it touches so they can be routed to an area. Tests are
+mandatory, overriding the template's 'OPTIONAL' marker: read `test-design.md` and create one test
+task per test file in its §4, in that user story's 'Tests' subsection, before the implementation
+tasks it covers. Each test task names the test file, lists its TC-IDs, and has `Verify: tests
+exist and fail before implementation`. Implementation tasks that make them pass depend on it."*
 
 ### F. Analyze
-Invoke `Skill speckit-analyze`, skipping its step 8 (offer remediation). CRITICAL findings → list
+Invoke `Skill speckit-analyze`, skipping its step 8 (offer remediation). Also check test coverage:
+a P1 acceptance scenario with no TC in `test-design.md`, or a TC with no test task in `tasks.md`,
+is CRITICAL. CRITICAL findings → list
 them, recommend the concrete fix, and state that `/jy-sdd:execution` should not start until resolved.
 Otherwise summarize HIGH/MEDIUM counts in one line. Edit nothing automatically.
 
@@ -110,6 +131,6 @@ side effect, run by hand).
 
 ## Done When
 
-- [ ] `spec.md` approved at GATE 1; `plan.md` + `design.md` approved at GATE 2
+- [ ] `spec.md` approved at GATE 1; `plan.md` + `design.md` + `test-design.md` approved at GATE 2
 - [ ] `tasks.md` generated and analyze report shown
 - [ ] No files outside `specs/<NNN-feature>/` and `.specify/feature.json` changed

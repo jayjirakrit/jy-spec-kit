@@ -15,7 +15,9 @@ Run these checks and print a table `check → PASS / WARN / FAIL → fix`. Chang
    FAIL on major drift, pointing at the plugin's `docs/MIGRATION.md`).
 3. **Constitution**: `.specify/memory/constitution.md` has a Technology Standards section with a
    subsection for every area id.
-4. **Templates**: each file listed in the profile's `templates` exists in `.specify/templates/`;
+4. **Templates**: each file listed in the profile's `templates`, plus each plugin default in
+   `${CLAUDE_PLUGIN_ROOT}/templates/` the profile does not override, exists in
+   `.specify/templates/` (FAIL if `design-template.md` or `test-design-template.md` is missing);
    report byte-different ones as drift (WARN, show `diff` stat), not an error.
 5. **Permissions**: the profile's `permissions.allow` entries are present in `.claude/settings.json`.
 6. **Git hygiene**: `.gitignore` does not blanket-ignore `.claude` or `.specify`; `.claude/` and

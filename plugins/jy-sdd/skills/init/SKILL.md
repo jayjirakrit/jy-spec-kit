@@ -34,11 +34,12 @@ Wires one repo to this plugin. Ownership rules:
      `hooks/lint-area.mjs` header) and `protected` globs.
    - Verify every area `root` exists on disk; warn if not.
 4. **Templates.** For each path in the profile's `templates`, copy it from the profile folder into
-   `.specify/templates/` (ask before overwriting). If the profile has no `design-template.md`,
-   derive one from another profile's by replacing its per-area sections with one section per
-   configured area. Then, if `.specify/templates/plan-template.md` lacks them, append the
-   "API Contracts" (when `requireContracts`) and "Design Sketches" sections that point at
-   `contracts/` and `design.md`.
+   `.specify/templates/` (ask before overwriting). Then, for each plugin default in
+   `${CLAUDE_PLUGIN_ROOT}/templates/` (`design-template.md`, `test-design-template.md`) whose
+   file name the profile does not supply, copy the default the same way. Then, if
+   `.specify/templates/plan-template.md` lacks them, append the "API Contracts" (when
+   `requireContracts`), "Design Sketches" and "Test Design" sections that point at
+   `contracts/`, `design.md` and `test-design.md`.
 5. **Permissions.** Merge the profile's `permissions.allow` into the repo's committed
    `.claude/settings.json` (create if needed; preserve existing entries; keep the repo's own
    `deny` rules). Plugins cannot ship permission settings, so this is the only way they reach teammates.

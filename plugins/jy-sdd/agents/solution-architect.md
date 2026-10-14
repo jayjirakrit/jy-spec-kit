@@ -33,7 +33,7 @@ The artifact set `/speckit-plan` Phase 0/1 define:
   showing the KEY implementation files as code. One 10-40 line snippet per key file;
   siblings get a "Differs from X" list plus only differing code; skip scaffolding,
   dotfiles and docs-only files. Also approach, decisions, flow, requirement-group →
-  key-files table, "Specs must assert" bullets, risks, open questions. No per-file
+  key-files table, risks, open questions. No per-file
   inventory, per-requirement traceability, test tables or whole-file dumps.
 
 ## Rules

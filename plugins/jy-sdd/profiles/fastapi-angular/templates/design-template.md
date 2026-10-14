@@ -26,12 +26,11 @@
     Mark any elision with a comment; never elide the decision itself.
   - Siblings (e.g. 4 similar pages): full snippets for the first; for the rest a
     "Differs from X" list (fields, endpoint, rules, extra state) plus code only for
-    what differs. Every sibling still gets its own
-    one-line "Specs must assert" bullets.
+    what differs. Every sibling still gets its own "Tests" line.
   - Requirements: one compact table mapping each requirement group to key files
     (group, e.g. "FR-001..003", rather than one row per FR unless they differ).
-  - No per-file inventory table, no test tables, no config dumps; tests get one short
-    list of "what the specs must assert" per key file, not code.
+  - No per-file inventory table, no test tables, no config dumps. Tests live in
+    test-design.md; each key file gets one "Tests" line listing its TC-IDs, not code.
   - Reference contracts/*.md and data-model.md; never restate schemas.
   - Follow CLAUDE.md conventions; don't restate them.
   - Spec conflicts / code-vs-doc mismatches go in §6, fix proposals in §7. The architect
@@ -41,7 +40,7 @@
   - Engineers treat this as guidance and report deviations.
 -->
 
-Spec: `spec.md` · Plan: `plan.md` · Contracts: `contracts/*.md`
+Spec: `spec.md` · Plan: `plan.md` · Contracts: `contracts/*.md` · Tests: `test-design.md`
 
 ## 1. Approach
 
@@ -75,7 +74,7 @@ Requirement → key files (grouped):
 [router / service / model key path]
 ```
 **Check**: [one line]
-**Specs must assert**: [2-4 bullets]
+**Tests**: [TC-### list from test-design.md]
 
 ### 4.2 Core / shared building blocks
 (includes shared UI shell: layout / navbar / result-panel / file-field)
@@ -85,7 +84,7 @@ Requirement → key files (grouped):
 [public API + behaviour on edge cases]
 ```
 **Check**: [one line]
-**Specs must assert**: [bullets]
+**Tests**: [TC-###]
 
 ### 4.3 Features / pages
 
@@ -100,13 +99,14 @@ Requirement → key files (grouped):
 [template: idle / pending / error / success, actions, disabled rules]
 ```
 **Check**: [one line]
-**Specs must assert**: [bullets]
+**Tests**: [TC-###]
 
 #### [sibling feature] — differs from [first]
 - [inputs / endpoint / rules / extra state]
 ```ts
 [only the code that differs]
 ```
+**Tests**: [TC-###]
 
 ### 4.4 Algorithms / business rules
 
@@ -114,9 +114,7 @@ Requirement → key files (grouped):
 ```[lang]
 [full logic incl. precedence]
 ```
-| Input | Expected |
-|-------|----------|
-[3-5 rows incl. an edge case]
+Worked examples are TC-### in test-design.md §4.
 
 ### 4.5 Routing, config & infra (only where a decision lives)
 

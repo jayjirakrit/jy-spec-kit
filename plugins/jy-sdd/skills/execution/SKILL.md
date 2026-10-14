@@ -34,8 +34,26 @@ and reports. The documentation half is `/jy-sdd:elaboration`.
 
 When invoking `Skill speckit-implement`, add these instructions:
 
-- **Read `design.md`** (if present) with the other design docs: it is the intended direction;
-  deviations must be called out in the completion report.
+- **Read `design.md` and `test-design.md`** (if present) with the other design docs: they are the
+  intended direction; deviations must be called out in the completion report.
+- **Tests first**: a story's test tasks run before the implementation tasks that depend on them,
+  even when both are `[P]`. Dispatch every task with the Testing rules below.
+
+## Testing rules (pass to every engineer dispatch)
+
+Include these in the dispatch prompt, with the TC-IDs of the task and the path to `test-design.md`:
+
+- Read `test-design.md`: the area's strategy and layer rows (§1-2), the task's TCs (§4), the
+  reference unit test for each touched layer (§5), and test data and mocking (§6).
+- Test task: write every listed TC, one test per TC, with its TC-ID in the test name or a comment.
+  Run them and confirm they fail for the expected reason. A test that passes before the code
+  exists is wrong.
+- Assert the TC's "Then" observably. No assertion-free, skipped or snapshot-only tests.
+- Follow the layer's reference test shape and fake only what its §2 row allows; never fake the
+  unit under test.
+- Behaviour added without a TC (a bug fix, an extra error path) gets a test too, reported under
+  `ASSUMPTIONS / DEVIATIONS`. A TC that is untestable as written goes under `OPEN QUESTIONS`;
+  never drop it silently.
 - **Route each task by file path** using `.sdd.config.json` `areas[].root`:
   - All target files under one area's `root` → dispatch the engineer matching that area's `role`
     (`Agent`, `subagent_type: backend-engineer` for `role: backend`, `frontend-engineer` for
@@ -86,6 +104,15 @@ Pipelined per area so one area's review overlaps the other's work:
    `FEATURE_DIR/quality-report.md`. Integration FAIL → route findings once, then re-dispatch
    `SCOPE: integration`, `MODE: delta` once.
 4. Only one area (or none) touched → a single `SCOPE: full` review replaces lanes + integration.
+
+Every area-lane and `full` dispatch also includes these **test traceability rules**:
+
+- Read `FEATURE_DIR/test-design.md`. For each in-scope TC, find the test that implements it (by
+  TC-ID or name) and report it as acceptance-criteria evidence.
+- A missing TC test, a skipped test, a test that doesn't assert the TC's "Then", or one that fakes
+  more than its layer's §2 row allows (including the unit under test) is a finding.
+- A P1 acceptance scenario with no passing test is a **major** finding and makes the verdict
+  FAIL. Other gaps are minor.
 
 The feature is done only when the verdict is PASS or PASS WITH NOTES.
 

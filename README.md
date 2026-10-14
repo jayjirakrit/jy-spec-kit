@@ -9,11 +9,12 @@ pinned, this plugin adds the orchestration, agents, hooks and per-stack profiles
 | Piece | Where | Purpose |
 |---|---|---|
 | `/jy-sdd:init` | `skills/init` | Wire a repo: Spec-Kit, profile, `.sdd.config.json`, templates, permissions |
-| `/jy-sdd:elaboration` | `skills/elaboration` | specify → clarify → **gate** → plan (+`design.md`) → **gate** → tasks → analyze |
+| `/jy-sdd:elaboration` | `skills/elaboration` | specify → clarify → **gate** → plan (+`design.md`, `test-design.md`) → **gate** → tasks (tests first) → analyze |
 | `/jy-sdd:execution` | `skills/execution` | implement ⇄ converge → quality review ∥ `/code-review` → **gate** → optional commit |
 | `/jy-sdd:doctor` | `skills/doctor` | Read-only setup health check |
 | Agents | `agents/` | `business-analyst`, `solution-architect`, `team-lead`, `backend-engineer`, `frontend-engineer`, `quality-engineer` |
 | Hooks | `hooks/` | config-driven path guard, per-area lint-on-edit, post-compact context restore |
+| Templates | `templates/` | Stack-neutral defaults: `design-template.md`, `test-design-template.md` (a profile may override either) |
 | Profiles | `profiles/` | `fastapi-angular`, `blank` (stack facts + templates + permission baseline) |
 
 ## Install
@@ -64,8 +65,8 @@ Create `plugins/jy-sdd/profiles/<name>/profile.json` with `config` (areas, gates
 Extracted from the Serichai web portal's local setup. **Not yet run end to end.** Known gaps:
 
 - Plugin skill/hook loading and `${CLAUDE_PLUGIN_ROOT}` expansion not yet verified in a live install.
-- `design-template.md` / `contracts-template.md` exist only in the `fastapi-angular` profile; other
-  profiles derive them in `/jy-sdd:init`. A generic design template is still to be written.
+- `contracts-template.md` exists only in the `fastapi-angular` profile; a generic one is still to be
+  written. `design-template.md` and `test-design-template.md` have plugin-level defaults.
 - Stock Spec-Kit's own scripts are PowerShell or bash depending on `specify init --script`; the plugin
   only picks the matching one. Mixed Windows + macOS/Linux teams should choose `sh` under WSL/Git Bash or
   commit both script sets.
